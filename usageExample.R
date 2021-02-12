@@ -1,5 +1,6 @@
 setwd("~/CPTACBiolinks/CPTACBiolinks")
 source("./R/loadData.R")
+source("./R/processData.R")
 
 ## GET DATASETS LIST
 getDatasetsList()
@@ -21,3 +22,17 @@ names(endometrial_omics)
 ## GET ALL DATA OF CANCER
 all_endometrial = getData(CancerType,"All")
 names(all_endometrial)
+
+
+## TOP n MUTATED GENES
+topMutatedGene(Mutation, 10)
+
+
+## SUBSET RNAseq MATRIX ONLY PATIENT WITH GENE MUTATION
+RNAseq = all_endometrial$`RNAseq (HiSeq, Gene level, Tumor)`
+Mutation = all_endometrial$`Mutation (Gene level, Tumor)`
+gene = topMutatedGene(Mutation)
+
+RNAseq_sub = subsetSharedFetures(RNAseq,Mutation,gene$geneID)
+
+

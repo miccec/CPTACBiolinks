@@ -2,9 +2,14 @@ START_INDEX = "https://www.dropbox.com/s/u491n4g793k52f1/index.tsv?raw=1"
 library(maftools)
 
 ## Read ulr as table
-readUrl <- function(url, sep = ","){
+readUrl <- function(url, sep = ",", rownames = 0){
   url_ind <- url(url) 
-  ind = read.table(url_ind,sep = sep, header = TRUE)
+  if(rownames>0){
+    ind = read.table(url_ind,sep = sep, header = TRUE, row.names = rownames)
+  }else{
+    ind = read.table(url_ind,sep = sep, header = TRUE)
+  }
+  
   return(ind)
 }
 
@@ -55,7 +60,7 @@ loadData <- function(url){
   if(substr(url, nchar(url)-8, nchar(url)-6) == "maf"){
     data = readMaf(url)
   }else{
-    data = readUrl(url, sep = "\t")
+    data = readUrl(url, sep = "\t", rownames = 1)
   }
   
   return(data)
