@@ -1,5 +1,5 @@
-setwd("~/CPTAC-Biolinks/")
-source("download.R")
+setwd("~/CPTACBiolinks/CPTACBiolinks")
+source("./R/loadData.R")
 
 ## GET DATASETS LIST
 getDatasetsList()
