@@ -5,9 +5,9 @@ library(maftools)
 readUrl <- function(url, sep = ",", rownames = 0){
   url_ind <- url(url) 
   if(rownames>0){
-    ind = read.table(url_ind,sep = sep, header = TRUE, row.names = rownames)
+    ind = read.table(url_ind,sep = sep, header = TRUE, row.names = rownames, stringsAsFactors = FALSE)
   }else{
-    ind = read.table(url_ind,sep = sep, header = TRUE)
+    ind = read.table(url_ind,sep = sep, header = TRUE, stringsAsFactors = FALSE)
   }
   
   return(ind)
@@ -20,14 +20,21 @@ getStartIndex <- function(){
 }
 
 ## Get datasets index (list user)
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
 getDatasetsList <- function(){
+  
   ind = getStartIndex()
   print("Avaiable datasets:")
   return(ind[,1:2])
 }
 
-## Get index of a dataset
 getCancerIndex <- function(CancerType){
+  
   ind = getStartIndex()
   url_ind <- ind$Data.link[toupper(ind$Dataset.name) == toupper(CancerType)]
   
@@ -36,14 +43,22 @@ getCancerIndex <- function(CancerType){
 }
 
 ## Get index of a dataset (list user)
+#' Title
+#'
+#' @param CancerType 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 getOmicsList <- function(CancerType){
+  
   print(paste("Avaiable data for",CancerType,":"))
   
   ind = getCancerIndex(CancerType)
   return(ind[,1])
 }
 
-## Read a maf url
 readMaf <- function(url){
   
   data = data.table::fread(url, sep = "\t", stringsAsFactors = FALSE, 
