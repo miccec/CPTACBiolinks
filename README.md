@@ -25,3 +25,16 @@ getOmicsList(CancerType)
 
 ```
 with the function `getOmicsList` you get all the available data for a specific cancer dataset.
+```
+## GET MULTI DATA TYPE OF CANCER
+data_type = c("RNAseq (HiSeq, Gene level, Tumor)", "Proteome (Gene level, TMT Unshared Log Ratio, Tumor)")
+endometrial_omics = getData(CancerType,data_type)
+names(endometrial_omics)
+```
+Once you have know available data for your  project you can download the desired data with ```getData```. If you want to download all the data, you can use "All" as parameter to getData.
+
+```
+## GET ALL DATA OF CANCER
+all_endometrial = getData(CancerType,"All")
+names(all_endometrial)
+```
