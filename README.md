@@ -24,3 +24,4 @@ CancerType = "Endometrial"
 getOmicsList(CancerType)
 
 ```
+with the function `getOmicsList` you get all the available data for a specific cancer dataset.
