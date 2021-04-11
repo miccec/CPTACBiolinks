@@ -3,3 +3,5 @@
 export(getData)
 export(getDatasetsList)
 export(getOmicsList)
+export(subsetSharedFetures)
+export(topMutatedGene)

@@ -2,6 +2,11 @@ setwd("~/CPTACBiolinks/CPTACBiolinks")
 source("./R/loadData.R")
 source("./R/processData.R")
 
+
+library(devtools)
+install_github("miccec/CPTACBiolinks")
+library(CPTACBiolinks)
+
 ## GET DATASETS LIST
 getDatasetsList()
 
@@ -10,13 +15,13 @@ CancerType = "Endometrial"
 getOmicsList(CancerType)
 
 ## GET ONE DATA TYPE OF CANCER
-DataType = "Proteome (Gene level, TMT Unshared Log Ratio, Tumor)"
-endometrial_proteomics = getData(CancerType,DataType)
-head(endometrial_proteomics)
+DataType = "Phosphoproteome (Gene level, Tumor)"
+phosphopro = getData(CancerType,DataType)
+head(phosphopro)
 
 ## GET MULTI DATA TYPE OF CANCER
-data_type = c("RNAseq (HiSeq, Gene level, Tumor)", "Proteome (Gene level, TMT Unshared Log Ratio, Tumor)")
-endometrial_omics = getData(cancer_type,data_type)
+DataType = c("RNAseq (HiSeq, Gene level, Tumor)", "Proteome (Gene level, TMT Unshared Log Ratio, Tumor)")
+endometrial_omics = getData(CancerType,DataType)
 names(endometrial_omics)
 
 ## GET ALL DATA OF CANCER

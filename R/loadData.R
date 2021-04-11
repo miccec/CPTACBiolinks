@@ -4,18 +4,6 @@ library(maftools)
 ## Read ulr as table
 readUrl <- function(url, sep = ",", rownames = 0){
   
-  #if(substr(url,nchar(url)-7,nchar(url)-6) == "gz"){
-  #  url_ind <- textConnection(readLines(gzcon(url(url)), warn=FALSE))
-  #} else{
-  #  url_ind <- url(url) 
-  # }
-  
-  #if(rownames>0){
-  #  ind = read.table(url_ind,sep = sep, header = TRUE, row.names = rownames, stringsAsFactors = FALSE)
-  #}else{
-  #  ind = read.table(url_ind,sep = sep, header = TRUE, stringsAsFactors = FALSE)
-  #}
-  
   ind = data.table::fread(url, sep = "\t", stringsAsFactors = FALSE, 
                                                     verbose = FALSE, data.table = TRUE, showProgress = TRUE, 
                                                     header = TRUE, fill = TRUE)
@@ -33,9 +21,11 @@ getStartIndex <- function(){
   return(ind)
 }
 
-## Get datasets index (list user)
-#' Title
+## Get datasets list (user)
+#' Datasets list
 #'
+#' Returns the list of available cancer datasets
+#' 
 #' @return
 #' @export
 #'
@@ -44,7 +34,7 @@ getDatasetsList <- function(){
   
   ind = getStartIndex()
   print("Avaiable datasets:")
-  return(ind[,1:2])
+  return(ind[order(ind$Dataset_name),1:2])
 }
 
 getCancerIndex <- function(CancerType){
@@ -56,8 +46,10 @@ getCancerIndex <- function(CancerType){
   return(ind)
 }
 
-## Get index of a dataset (list user)
-#' Title
+## Get omics datasets of cancer (user)
+#' Omics datasets list
+#'
+#' Returns the list of available omics data of cancer
 #'
 #' @param CancerType 
 #'
@@ -70,16 +62,12 @@ getOmicsList <- function(CancerType){
   print(paste("Avaiable data for",CancerType,":"))
   
   ind = getCancerIndex(CancerType)
-  return(ind[,1])
+  return(sort(ind$OMICS_Dataset))
 }
 
 readMaf <- function(url){
 
-  if(substr(url,nchar(url)-7,nchar(url)-6) == "gz"){
-    filename <- "mutation.maf.gz"
-  } else{
-    filename <- "mutation.maf"
-  }
+  filename <- "mutation.maf.gz"
   
   #data = data.table::fread(url, sep = "\t", stringsAsFactors = FALSE, 
   #                         verbose = FALSE, data.table = TRUE, showProgress = TRUE, 
@@ -96,7 +84,7 @@ readMaf <- function(url){
 ## Load file
 loadData <- function(url){
   
-  if(substr(url, nchar(url)-8, nchar(url)-6) == "maf" | substr(url, nchar(url)-11, nchar(url)-9) == "maf"){
+  if(substr(url, nchar(url)-5, nchar(url)-3) == "maf"){
     data = readMaf(url)
   }else{
     data = readUrl(url, sep = "\t", rownames = 1)
@@ -105,8 +93,10 @@ loadData <- function(url){
   return(data)
 }
 
-## load data of a dataset
-#' Title
+## Get data of a dataset
+#' Get omics data
+#'
+#' Allow to download one or more omics data from the dataset
 #'
 #' @param CancerType 
 #' @param DataType 

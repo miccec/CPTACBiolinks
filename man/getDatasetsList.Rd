@@ -2,7 +2,7 @@
 % Please edit documentation in R/loadData.R
 \name{getDatasetsList}
 \alias{getDatasetsList}
-\title{Title}
+\title{Datasets list}
 \usage{
 getDatasetsList()
 }
@@ -10,5 +10,5 @@ getDatasetsList()
 
 }
 \description{
-Title
+Returns the list of available cancer datasets
 }

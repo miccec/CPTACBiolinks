@@ -2,7 +2,7 @@
 % Please edit documentation in R/loadData.R
 \name{getOmicsList}
 \alias{getOmicsList}
-\title{Title}
+\title{Omics datasets list}
 \usage{
 getOmicsList(CancerType)
 }
@@ -13,5 +13,5 @@ getOmicsList(CancerType)
 
 }
 \description{
-Title
+Returns the list of available omics data of cancer
 }

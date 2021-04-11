@@ -2,7 +2,7 @@
 % Please edit documentation in R/loadData.R
 \name{getData}
 \alias{getData}
-\title{Title}
+\title{Get omics data}
 \usage{
 getData(CancerType, DataType)
 }
@@ -15,5 +15,5 @@ getData(CancerType, DataType)
 
 }
 \description{
-Title
+Allow to download one or more omics data from the dataset
 }
