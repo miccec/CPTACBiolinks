@@ -1,4 +1,4 @@
-START_INDEX = "https://dl.dropbox.com/s/ge54n6mc4bri111/index.csv.gz"
+START_INDEX = "https://dl.dropbox.com/s/ofxteh9ovmftcqf/index.csv"
 library(maftools)
 
 ## Read ulr as table
@@ -120,17 +120,17 @@ getData <- function(CancerType,DataType){
   ind = getCancerIndex(CancerType)
   
   if(length(DataType) == 1 && toupper(DataType) == "ALL"){
-    DataType = ind$OMICS.Dataset 
+    DataType = ind$OMICS_Dataset 
   }
   
   data = c()
   if(length(DataType) == 1){
     print(paste("Loading", DataType))
-    url_ind <- ind$url[toupper(ind$OMICS.Dataset) == toupper(DataType)]
+    url_ind <- ind$url[toupper(ind$OMICS_Dataset) == toupper(DataType)]
     data = loadData(url_ind)
   }else{
     for (type in DataType){
-      url_ind <- ind$url[toupper(ind$OMICS.Dataset) == toupper(type)]
+      url_ind <- ind$url[toupper(ind$OMICS_Dataset) == toupper(type)]
       if(nchar(url_ind)>0){
         print(paste("Loading", type))
         data[[type]] = loadData(url_ind)
