@@ -5,7 +5,7 @@ Currently the archive contains mutliple profiling (including genomics, transcrip
 ## Installation
 ```
 library(devtools)
-install_github("miccec/CPTACBiolink")
+install_github("miccec/CPTACBiolinks")
 library(CPTACBiolinks)
 ```
 
