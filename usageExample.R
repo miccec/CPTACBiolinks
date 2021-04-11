@@ -1,8 +1,3 @@
-setwd("~/CPTACBiolinks/CPTACBiolinks")
-source("./R/loadData.R")
-source("./R/processData.R")
-
-
 library(devtools)
 install_github("miccec/CPTACBiolinks")
 library(CPTACBiolinks)
