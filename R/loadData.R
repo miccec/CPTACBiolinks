@@ -3,7 +3,13 @@ library(maftools)
 
 ## Read ulr as table
 readUrl <- function(url, sep = ",", rownames = 0){
-  url_ind <- url(url) 
+  
+  if(substr(url,nchar(url)-7,nchar(url)-6) == "gz"){
+    url_ind <- textConnection(readLines(gzcon(url(url))))
+  } else{
+    url_ind <- url(url) 
+  }
+  
   if(rownames>0){
     ind = read.table(url_ind,sep = sep, header = TRUE, row.names = rownames, stringsAsFactors = FALSE)
   }else{
@@ -60,19 +66,29 @@ getOmicsList <- function(CancerType){
 }
 
 readMaf <- function(url){
+
+  if(substr(url,nchar(url)-7,nchar(url)-6) == "gz"){
+    filename <- "mutation.maf.gz"
+  } else{
+    filename <- "mutation.maf"
+  }
   
-  data = data.table::fread(url, sep = "\t", stringsAsFactors = FALSE, 
-                           verbose = FALSE, data.table = TRUE, showProgress = TRUE, 
-                           header = TRUE, fill = TRUE, skip = "Hugo_Symbol", 
-                           quote = "")
+  #data = data.table::fread(url, sep = "\t", stringsAsFactors = FALSE, 
+  #                         verbose = FALSE, data.table = TRUE, showProgress = TRUE, 
+  #                         header = TRUE, fill = TRUE, skip = "Hugo_Symbol", 
+  #                         quote = "")
   
-  return(read.maf(data))
+  download.file(url, filename, quiet = TRUE)
+  data <- read.maf(filename)
+  unlink(filename)
+  return(data)
 }
+
 
 ## Load file
 loadData <- function(url){
   
-  if(substr(url, nchar(url)-8, nchar(url)-6) == "maf"){
+  if(substr(url, nchar(url)-8, nchar(url)-6) == "maf" | substr(url, nchar(url)-11, nchar(url)-9) == "maf"){
     data = readMaf(url)
   }else{
     data = readUrl(url, sep = "\t", rownames = 1)
@@ -82,7 +98,17 @@ loadData <- function(url){
 }
 
 ## load data of a dataset
+#' Title
+#'
+#' @param CancerType 
+#' @param DataType 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 getData <- function(CancerType,DataType){
+  
   ind = getCancerIndex(CancerType)
   
   if(length(DataType) == 1 && toupper(DataType) == "ALL"){
