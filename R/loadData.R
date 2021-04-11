@@ -1,19 +1,27 @@
-START_INDEX = "https://www.dropbox.com/s/u491n4g793k52f1/index.tsv?raw=1"
+START_INDEX = "https://dl.dropbox.com/s/ge54n6mc4bri111/index.csv.gz"
 library(maftools)
 
 ## Read ulr as table
 readUrl <- function(url, sep = ",", rownames = 0){
   
-  if(substr(url,nchar(url)-7,nchar(url)-6) == "gz"){
-    url_ind <- textConnection(readLines(gzcon(url(url))))
-  } else{
-    url_ind <- url(url) 
-  }
+  #if(substr(url,nchar(url)-7,nchar(url)-6) == "gz"){
+  #  url_ind <- textConnection(readLines(gzcon(url(url)), warn=FALSE))
+  #} else{
+  #  url_ind <- url(url) 
+  # }
   
-  if(rownames>0){
-    ind = read.table(url_ind,sep = sep, header = TRUE, row.names = rownames, stringsAsFactors = FALSE)
-  }else{
-    ind = read.table(url_ind,sep = sep, header = TRUE, stringsAsFactors = FALSE)
+  #if(rownames>0){
+  #  ind = read.table(url_ind,sep = sep, header = TRUE, row.names = rownames, stringsAsFactors = FALSE)
+  #}else{
+  #  ind = read.table(url_ind,sep = sep, header = TRUE, stringsAsFactors = FALSE)
+  #}
+  
+  ind = data.table::fread(url, sep = "\t", stringsAsFactors = FALSE, 
+                                                    verbose = FALSE, data.table = TRUE, showProgress = TRUE, 
+                                                    header = TRUE, fill = TRUE)
+  
+  if(rownames){
+    ind = data.frame(ind,row.names = 1)
   }
   
   return(ind)
@@ -42,7 +50,7 @@ getDatasetsList <- function(){
 getCancerIndex <- function(CancerType){
   
   ind = getStartIndex()
-  url_ind <- ind$Data.link[toupper(ind$Dataset.name) == toupper(CancerType)]
+  url_ind <- ind$Data_link[toupper(ind$Dataset_name) == toupper(CancerType)]
   
   ind = readUrl(url_ind)
   return(ind)

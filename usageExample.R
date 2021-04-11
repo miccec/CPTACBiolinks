@@ -25,6 +25,7 @@ names(all_endometrial)
 
 
 ## TOP n MUTATED GENES
+Mutation = all_endometrial$`Mutation (Gene level, Tumor)`
 topMutatedGene(Mutation, 10)
 
 
