@@ -4,12 +4,12 @@
 \alias{getData}
 \title{Get omics data}
 \usage{
-getData(CancerType, DataType)
+getData(CancerType, DataName)
 }
 \arguments{
 \item{CancerType}{}
 
-\item{DataType}{}
+\item{DataName}{}
 }
 \value{
 

@@ -99,27 +99,27 @@ loadData <- function(url){
 #' Allow to download one or more omics data from the dataset
 #'
 #' @param CancerType 
-#' @param DataType 
+#' @param DataName 
 #'
 #' @return
 #' @export
 #'
 #' @examples
-getData <- function(CancerType,DataType){
+getData <- function(CancerType,DataName){
   
   ind = getCancerIndex(CancerType)
   
-  if(length(DataType) == 1 && toupper(DataType) == "ALL"){
-    DataType = ind$OMICS_Dataset 
+  if(length(DataName) == 1 && toupper(DataName) == "ALL"){
+    DataName = ind$OMICS_Dataset 
   }
   
   data = c()
-  if(length(DataType) == 1){
-    print(paste("Loading", DataType))
-    url_ind <- ind$url[toupper(ind$OMICS_Dataset) == toupper(DataType)]
+  if(length(DataName) == 1){
+    print(paste("Loading", DataName))
+    url_ind <- ind$url[toupper(ind$OMICS_Dataset) == toupper(DataName)]
     data = loadData(url_ind)
   }else{
-    for (type in DataType){
+    for (type in DataName){
       url_ind <- ind$url[toupper(ind$OMICS_Dataset) == toupper(type)]
       if(nchar(url_ind)>0){
         print(paste("Loading", type))
@@ -132,4 +132,37 @@ getData <- function(CancerType,DataType){
   
   return(data)
 }
+
+## Get all data of a type in a dataset
+#' Get omics data type
+#'
+#' Allow to download one type of omics data from the dataset
+#' 
+#' "Clinical"        "SCNV"            "Mutation"        "Acetylproteome"  "Phosphoproteome" "Proteome"        "RNAseq"         
+#' "miRNA"           "Circular"        "Methylation"     "CNV"             "Glycoproteome"   "RPPA" 
+#'
+#' @param CancerType 
+#' @param DataType 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+getDataType <- function(CancerType,DataType){
+  
+  ind = getCancerIndex(CancerType)
+  
+  data = c()
+
+  print(paste("Loading", DataType))
+  indx <- grep(toupper(DataType),  toupper(ind$OMICS_Dataset))
+  for (i in indx){
+    url_ind <- ind$url[i]
+    type <- ind$OMICS_Dataset[i]
+    data[[type]] = loadData(url_ind)
+  }
+  
+  return(data)
+}
+
 

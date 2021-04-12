@@ -9,12 +9,20 @@ getDatasetsList()
 CancerType = "Endometrial"
 getOmicsList(CancerType)
 
-## GET ONE DATA TYPE OF CANCER
+## GET ALL DATASETS OF AN OMICS TYPE FROM CANCER
+# Possible options: 
+# "Clinical","SCNV","Mutation","Acetylproteome","Phosphoproteome","Proteome"        
+# "RNAseq","miRNA","Circular","Methylation","CNV","Glycoproteome","RPPA" 
+OmicsType = "Phosphoproteome"
+phosphopro = getDataType(CancerType,OmicsType)
+names(phosphopro)
+
+## GET SPECIFIC DATA OF CANCER
 DataType = "Phosphoproteome (Gene level, Tumor)"
 phosphopro = getData(CancerType,DataType)
 head(phosphopro)
 
-## GET MULTI DATA TYPE OF CANCER
+## GET MULTI DATA OF CANCER
 DataType = c("RNAseq (HiSeq, Gene level, Tumor)", "Proteome (Gene level, TMT Unshared Log Ratio, Tumor)")
 endometrial_omics = getData(CancerType,DataType)
 names(endometrial_omics)
@@ -22,7 +30,6 @@ names(endometrial_omics)
 ## GET ALL DATA OF CANCER
 all_endometrial = getData(CancerType,"All")
 names(all_endometrial)
-
 
 ## TOP n MUTATED GENES
 Mutation = all_endometrial$`Mutation (Gene level, Tumor)`

@@ -17,7 +17,6 @@ getDatasetsList()
 ```
 will produce the list of abailable cancer dataset
 
-
 ```
 ## GET DATA LIST OF CANCER
 CancerType = "Endometrial"
@@ -25,13 +24,22 @@ getOmicsList(CancerType)
 
 ```
 with the function `getOmicsList` you get all the available data for a specific cancer dataset.
+
+```
+## GET ALL DATASETS OF AN OMICS TYPE FROM CANCER
+OmicsType = "Phosphoproteome"
+phosphopro = getDataType(CancerType,OmicsType)
+```
+
+Once you have know available data for your  project you can download the desired data with the function `getDataType` you get all the available data for a specific omics type from cancer dataset.
+
 ```
 ## GET MULTI DATA TYPE OF CANCER
 data_type = c("RNAseq (HiSeq, Gene level, Tumor)", "Proteome (Gene level, TMT Unshared Log Ratio, Tumor)")
 endometrial_omics = getData(CancerType,data_type)
 names(endometrial_omics)
 ```
-Once you have know available data for your  project you can download the desired data with ```getData```. If you want to download all the data, you can use "All" as parameter to getData.
+otherwise you can use ```getData```, if you want to download specifics data or all the data, using "All" as parameter to getData.
 
 ```
 ## GET ALL DATA OF CANCER
