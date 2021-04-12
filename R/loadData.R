@@ -42,6 +42,10 @@ getCancerIndex <- function(CancerType){
   ind = getStartIndex()
   url_ind <- ind$Data_link[toupper(ind$Dataset_name) == toupper(CancerType)]
   
+  if(identical(url_ind, character(0))){
+    stop("Cancer type not found")
+  }
+  
   ind = readUrl(url_ind)
   return(ind)
 }
@@ -109,6 +113,10 @@ getData <- function(CancerType,DataName){
   
   ind = getCancerIndex(CancerType)
   
+  if(identical(ind, character(0))){
+    stop("Cancer type not found")
+  }
+  
   if(length(DataName) == 1 && toupper(DataName) == "ALL"){
     DataName = ind$OMICS_Dataset 
   }
@@ -117,6 +125,9 @@ getData <- function(CancerType,DataName){
   if(length(DataName) == 1){
     print(paste("Loading", DataName))
     url_ind <- ind$url[toupper(ind$OMICS_Dataset) == toupper(DataName)]
+    if(identical(url_ind, character(0))){
+      stop("Data type not found")
+    }
     data = loadData(url_ind)
   }else{
     for (type in DataName){
@@ -152,10 +163,19 @@ getDataType <- function(CancerType,DataType){
   
   ind = getCancerIndex(CancerType)
   
+  if(identical(ind, character(0))){
+    stop("Cancer type not found")
+  }
+  
   data = c()
 
   print(paste("Loading", DataType))
   indx <- grep(toupper(DataType),  toupper(ind$OMICS_Dataset))
+  
+  if(identical(indx, integer(0))){
+    stop("Data type not found")
+  }
+  
   for (i in indx){
     url_ind <- ind$url[i]
     type <- ind$OMICS_Dataset[i]
