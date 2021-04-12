@@ -8,7 +8,8 @@ readUrl <- function(url, sep = ",", rownames = 0){
                                                     verbose = FALSE, data.table = TRUE, showProgress = TRUE, 
                                                     header = TRUE, fill = TRUE)
   
-  if(rownames){
+  if(rownames & !any(duplicated(ind[,1]))){
+    
     ind = data.frame(ind,row.names = 1)
   }
   
