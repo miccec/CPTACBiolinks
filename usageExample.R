@@ -39,8 +39,12 @@ topMutatedGene(Mutation, 10)
 ## SUBSET RNAseq MATRIX ONLY PATIENT WITH GENE MUTATION
 RNAseq = all_endometrial$`RNAseq (HiSeq, Gene level, Tumor)`
 Mutation = all_endometrial$`Mutation (Gene level, Tumor)`
-gene = topMutatedGene(Mutation)
+gene = topMutatedGene(Mutation, 1)
 
 RNAseq_sub = subsetSharedFetures(RNAseq,Mutation,gene$geneID)
+
+# PLOT MUTATIONS
+plotMutations(Mutation)
+
 
 

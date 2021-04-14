@@ -80,7 +80,7 @@ readMaf <- function(url){
   #                         quote = "")
   
   download.file(url, filename, quiet = TRUE)
-  data <- read.maf(filename)
+  data <- maftools::read.maf(filename)
   unlink(filename)
   return(data)
 }

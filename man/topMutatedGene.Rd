@@ -4,7 +4,7 @@
 \alias{topMutatedGene}
 \title{Title}
 \usage{
-topMutatedGene(Mutation, num_genes = 1)
+topMutatedGene(Mutation, num_genes = 30)
 }
 \arguments{
 \item{Mutation}{}
