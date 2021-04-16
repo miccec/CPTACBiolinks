@@ -1,7 +1,7 @@
 useCase
 ================
 
-## Get all avaiable data of Endometrial
+## Get multi omics data of Endometrial
 
 ``` r
 library(CPTACBiolinks)
@@ -27,7 +27,7 @@ mutation = getDataType(CancerType,"mutation")
     ## -Summarizing
     ## -Processing clinical data
     ## --Missing clinical data
-    ## -Finished in 3.304s elapsed (18.1s cpu)
+    ## -Finished in 3.172s elapsed (17.4s cpu)
 
 ## Plot Mutation
 
@@ -56,7 +56,7 @@ RNAseq_sub = subsetSharedMutation(RNAseq_tum,mutation_tum,top_gene$geneID)
 proteomics_sub = subsetSharedMutation(proteomics_tum,mutation_tum,top_gene$geneID)
 ```
 
-## Boxplot RNAseq and Proteomics
+## Boxplot EGFR RNAseq and Proteomics
 
 ``` r
 samples_notPTEN <- colnames(proteomics_tum)[!colnames(proteomics_tum) %in% colnames(proteomics_sub)]

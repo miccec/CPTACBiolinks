@@ -601,7 +601,7 @@ body {
 <body>
 
 <h1 id="usecase">useCase</h1>
-<h2 id="get-all-avaiable-data-of-endometrial">Get all avaiable data of Endometrial</h2>
+<h2 id="get-multi-omics-data-of-endometrial">Get multi omics data of Endometrial</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(CPTACBiolinks)</span>
 <span id="cb1-2"><a href="#cb1-2"></a>CancerType =<span class="st"> &quot;Endometrial&quot;</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a>proteomics =<span class="st"> </span><span class="kw">getDataType</span>(CancerType,<span class="st">&quot;Proteome&quot;</span>)</span></code></pre></div>
@@ -617,7 +617,7 @@ body {
 ## -Summarizing
 ## -Processing clinical data
 ## --Missing clinical data
-## -Finished in 3.304s elapsed (18.1s cpu)
+## -Finished in 3.172s elapsed (17.4s cpu)
 </code></pre>
 <h2 id="plot-mutation">Plot Mutation</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">plotMutations</span>(mutation<span class="op">$</span><span class="st">`</span><span class="dt">Mutation (Gene level, Tumor)</span><span class="st">`</span>)</span></code></pre></div>
@@ -633,7 +633,7 @@ body {
 <span id="cb9-6"><a href="#cb9-6"></a></span>
 <span id="cb9-7"><a href="#cb9-7"></a>RNAseq_sub =<span class="st"> </span><span class="kw">subsetSharedMutation</span>(RNAseq_tum,mutation_tum,top_gene<span class="op">$</span>geneID)</span>
 <span id="cb9-8"><a href="#cb9-8"></a>proteomics_sub =<span class="st"> </span><span class="kw">subsetSharedMutation</span>(proteomics_tum,mutation_tum,top_gene<span class="op">$</span>geneID)</span></code></pre></div>
-<h2 id="boxplot-rnaseq-and-proteomics">Boxplot RNAseq and Proteomics</h2>
+<h2 id="boxplot-egfr-rnaseq-and-proteomics">Boxplot EGFR RNAseq and Proteomics</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>samples_notPTEN &lt;-<span class="st"> </span><span class="kw">colnames</span>(proteomics_tum)[<span class="op">!</span><span class="kw">colnames</span>(proteomics_tum) <span class="op">%in%</span><span class="st"> </span><span class="kw">colnames</span>(proteomics_sub)]</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="kw">boxplot</span>(<span class="kw">list</span>(<span class="dt">proteomics_with_PTEN =</span> <span class="kw">t</span>(proteomics_sub[<span class="st">&quot;EGFR&quot;</span>,]), <span class="dt">proteomics_without_PTEN =</span> <span class="kw">t</span>(proteomics_tum[<span class="st">&quot;EGFR&quot;</span>,samples_notPTEN])))</span></code></pre></div>
