@@ -1,0 +1,65 @@
+---
+title: "useCase"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Get multi omics data of (Endometrial)
+
+```{r downloadEnd}
+CancerType = "Endometrial"
+proteomics = getDataType(CancerType,"Proteome")
+RNAseq = getDataType(CancerType,"RNAseq")
+```
+
+## RNAseq and Proteomics (Endometrial)
+
+```{r CorrelationEnd}
+
+proteomics_tum = proteomics$`Proteome (Gene level, TMT Unshared Log Ratio, Tumor)`
+rnaseq_tum = RNAseq$`RNAseq (HiSeq, Gene level, Tumor)`
+
+p1 <- plotCorrelation(proteomics_tum,rnaseq_tum)
+p1 
+
+```
+
+## RNAseq and Proteomics Correlation (GBM)
+
+```{r downloadGBM}
+
+library(CPTACBiolinks)
+CancerType = "GBM"
+proteomic = getDataType(CancerType,"Proteome")
+RNAseq = getDataType(CancerType,"RNAseq")
+```
+
+## RNAseq and Proteomics Correlation (GBM)
+
+```{r CorrelationGBM}
+
+proteomics = as.data.frame(proteomic$proteome_normalized)
+rnaseq = as.data.frame(RNAseq$RNAseq_fpkm_uq)
+
+keep <- !duplicated(rnaseq$gene_name)
+rnaseq <- rnaseq[keep,]
+rownames(rnaseq) <- rnaseq$gene_name
+rnaseq <- rnaseq[,-c(1:3)]
+
+
+keep <- !duplicated(proteomics$symbol)
+proteomics <- proteomics[keep,]
+rownames(proteomics) <- proteomics$symbol
+proteomics <- proteomics[,-c(1:3)]
+
+colnames(proteomics) <- gsub("-",".",colnames(proteomics))
+
+p1 <- plotCorrelation(proteomics,rnaseq)
+p1 
+
+```
+
+

@@ -1,5 +1,5 @@
-library(dplyr)
-library(ComplexHeatmap)
+library(ggplot2)
+library(ggrepel)
 
 #' Get top mutated genes
 #'
@@ -96,4 +96,70 @@ plotMutations <- function(Mutation, top = 30){
 }
 
 
+#' convertEnsambleToSymbol
+#
+#' @param gene_list 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+convertEnsambleToSymbol <- function(gene_list){
+
+  gene_list <- rownames(rnaseq_tum)
+  
+  edb <- getEnsDbHsapiens()
+
+  gene_IDs2 <- data.frame(gene_name = substr(gene_list,1,15))
+  gene_IDs1 <- data.frame(gene_name = edb$gene_name, geneID = edb$gene_biotype)
+  gene_ID <- left_join(gene_IDs2,gene_IDs1)
+
+  return(gene_ID)
+
+}
+
+#' Plot correlation
+#'
+#' Plot correlation of genes between different omics data
+#'
+#' @param dataOmics1 
+#' @param dataOmics2 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plotCorrelation <- function(dataOmics1, dataOmics2){
+  
+  inter_genes <- intersect(rownames(dataOmics1),rownames(dataOmics2))
+  inter_samples <- intersect(colnames(dataOmics1),colnames(dataOmics2))
+  
+  df <- data.frame()
+  for (gene in inter_genes){
+    prot_gene <- as.numeric(dataOmics1[gene,inter_samples])
+    rna_gene <- as.numeric(dataOmics2[gene,inter_samples])
+    if(!(any(is.na(rna_gene)) | any(is.na(prot_gene)) )){
+      res <- cor.test(prot_gene,rna_gene, method = "spearman", exact = FALSE)
+      df[gene,"pval"] <- res$p.value
+      df[gene,"rho"] <- res$estimate
+    }
+    
+  }
+
+  p_val = as.numeric(unlist(df["pval"]))
+  p_val[p_val==0] <- (10^-1)*min(p_val[p_val!=0])
+  rho = as.numeric(unlist(df["rho"]))
+  
+  df2 <- data.frame(pval = -log10(p_val), rho = rho, geneID = rownames(df))
+  
+  return(ggplot(df2, aes(x=rho, y=pval, label = geneID)) + 
+    geom_point() + 
+    geom_text_repel(data=df2[order(df2$pval,df2$rho, decreasing = c(TRUE,FALSE)),][1:10,], aes(x=rho, y=pval, label = geneID),  colour = "blue") +
+    geom_text_repel(data=df2[order(df2$pval,df2$rho, decreasing = c(FALSE,TRUE)),][1:10,], aes(x=rho, y=pval, label = geneID),  colour = "red") +
+    geom_text_repel(data=df2[order(df2$rho),][1:2,], aes(x=rho, y=pval, label = geneID),  colour = "red") + 
+    ggtitle("Correlation Plot") + 
+    ylab(" -log (p-value)") + 
+    theme_bw())
+
+}
 

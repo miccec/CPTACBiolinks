@@ -1,5 +1,7 @@
 START_INDEX = "https://dl.dropbox.com/s/ofxteh9ovmftcqf/index.csv"
 library(maftools)
+library(dplyr)
+
 
 ## Read ulr as table
 readUrl <- function(url, sep = ",", rownames = 0){
@@ -186,4 +188,6 @@ getDataType <- function(CancerType,DataType){
   return(data)
 }
 
-
+getEnsDbHsapiens <- function(){
+  return(readUrl("https://dl.dropbox.com/s/zps3krx8gnenfy4/EnsDb.Hsapiens.v86.csv.gz"))
+}
