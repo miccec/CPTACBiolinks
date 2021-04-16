@@ -17,7 +17,7 @@ RNAseq = getDataType(CancerType,"RNAseq")
 
 ## RNAseq and Proteomics (Endometrial)
 
-```{r CorrelationEnd}
+```{r CorrelationEnd, warning=FALSE}
 
 proteomics_tum = proteomics$`Proteome (Gene level, TMT Unshared Log Ratio, Tumor)`
 rnaseq_tum = RNAseq$`RNAseq (HiSeq, Gene level, Tumor)`
@@ -39,7 +39,7 @@ RNAseq = getDataType(CancerType,"RNAseq")
 
 ## RNAseq and Proteomics Correlation (GBM)
 
-```{r CorrelationGBM}
+```{r CorrelationGBM, warning=FALSE}
 
 proteomics = as.data.frame(proteomic$proteome_normalized)
 rnaseq = as.data.frame(RNAseq$RNAseq_fpkm_uq)

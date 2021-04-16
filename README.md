@@ -49,5 +49,5 @@ names(all_endometrial)
 
 ## Use Cases
 
-[Example difference RNAseq and Proteomics with and without Mutation](https://github.com/miccec/CPTACBiolinks/blob/main/vignettes/useCase.md)
-[Example correlation beetween RNAseq and Proteomics](https://github.com/miccec/CPTACBiolinks/blob/main/vignettes/useCase2.md)
+* [Example difference RNAseq and Proteomics with and without Mutation](https://github.com/miccec/CPTACBiolinks/blob/main/vignettes/useCase.md)
+* [Example correlation beetween RNAseq and Proteomics](https://github.com/miccec/CPTACBiolinks/blob/main/vignettes/useCase2.md)
