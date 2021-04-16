@@ -27,21 +27,16 @@ mutation = getDataType(CancerType,"mutation")
     ## -Summarizing
     ## -Processing clinical data
     ## --Missing clinical data
-    ## -Finished in 3.172s elapsed (17.4s cpu)
+    ## -Finished in 4.122s elapsed (19.0s cpu)
 
 ## Plot Mutation
 
 ``` r
 plotMutations(mutation$`Mutation (Gene level, Tumor)`)
-```
-
-![](useCase_files/figure-gfm/plot-1.png)<!-- -->
-
-``` r
 plotMutations(mutation$`Mutation (Site level, Tumor)`)
 ```
 
-![](useCase_files/figure-gfm/plot-2.png)<!-- -->
+![](useCase_files/figure-gfm/plot-1.png)<!-- -->![](useCase_files/figure-gfm/plot-2.png)<!-- -->
 
 ## Subset RNAseq and Proteomics with shared mutation
 
@@ -61,13 +56,13 @@ proteomics_sub = subsetSharedMutation(proteomics_tum,mutation_tum,top_gene$geneI
 ``` r
 samples_notPTEN <- colnames(proteomics_tum)[!colnames(proteomics_tum) %in% colnames(proteomics_sub)]
 
-boxplot(list(proteomics_with_PTEN = t(proteomics_sub["EGFR",]), proteomics_without_PTEN = t(proteomics_tum["EGFR",samples_notPTEN])))
+boxplot(list(PTEN_MUT = t(proteomics_sub["EGFR",]), PTEN_WT = t(proteomics_tum["EGFR",samples_notPTEN])), main ="EGFR (proteomics)")
 ```
 
 ![](useCase_files/figure-gfm/boxplot-1.png)<!-- -->
 
 ``` r
-boxplot(list(RNAseq_with_PTEN = t(RNAseq_sub["EGFR",]), RNAseq_without_PTEN = t(RNAseq_tum["EGFR",samples_notPTEN])))
+boxplot(list(PTEN_MUT = t(RNAseq_sub["EGFR",]), PTEN_WT = t(RNAseq_tum["EGFR",samples_notPTEN])), main ="EGFR (RNAseq)")
 ```
 
 ![](useCase_files/figure-gfm/boxplot-2.png)<!-- -->
