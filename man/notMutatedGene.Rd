@@ -2,7 +2,7 @@
 % Please edit documentation in R/processData.R
 \name{notMutatedGene}
 \alias{notMutatedGene}
-\title{#Get genes without mutations}
+\title{Get genes without mutations}
 \usage{
 notMutatedGene(Mutation)
 }
@@ -13,5 +13,5 @@ notMutatedGene(Mutation)
 
 }
 \description{
-#Get genes without mutations
+Return list of genes not mutated
 }

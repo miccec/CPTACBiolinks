@@ -15,7 +15,7 @@ library(CPTACBiolinks)
 ## GET DATASETS LIST
 getDatasetsList()
 ```
-will produce the list of abailable cancer dataset
+will produce the list of available cancer dataset
 
 ```
 ## GET DATA LIST OF CANCER

@@ -16,3 +16,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports:
     maftools
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr

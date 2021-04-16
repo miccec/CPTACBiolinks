@@ -1,7 +1,9 @@
 library(dplyr)
 library(ComplexHeatmap)
 
-#' Title
+#' Get top mutated genes
+#'
+#' Return list of genes more mutated
 #'
 #' @param Mutation 
 #' @param num_genes 
@@ -10,7 +12,7 @@ library(ComplexHeatmap)
 #' @export
 #'
 #' @examples
-topMutatedGene <- function(Mutation, num_genes = 30){
+topMutatedGenes <- function(Mutation, num_genes = 30){
   
   gene = sort(apply(Mutation, 1, sum),decreasing = TRUE)[1:num_genes]
   num.mutation = as.integer(gene)
@@ -20,7 +22,9 @@ topMutatedGene <- function(Mutation, num_genes = 30){
   return(info)
 }
 
-#' #Get genes without mutations
+#' Get genes without mutations
+#'
+#' Return list of genes not mutated
 #'
 #' @param Mutation 
 #'
@@ -45,9 +49,11 @@ getPatientsWithMutation <- function(Mutation,geneID){
 }
 
 
-#' Title
+#' Get omics data with shared mutation
 #'
-#' @param RNAseq 
+#' Subset omics data with shared mutation
+#'
+#' @param Data 
 #' @param Mutation 
 #' @param gene_name 
 #'
@@ -55,12 +61,12 @@ getPatientsWithMutation <- function(Mutation,geneID){
 #' @export
 #'
 #' @examples
-subsetSharedFetures <- function(RNAseq,Mutation, gene_name){
+subsetSharedMutation <- function(Data,Mutation, gene_name){
   
   patients = getPatientsWithMutation(Mutation, gene_name)
-  subsetCol = colnames(RNAseq) %in% patients
+  subsetCol = colnames(Data) %in% patients
   
-  return(RNAseq[,subsetCol])
+  return(Data[,subsetCol])
 }
 
 #' Plot mutations

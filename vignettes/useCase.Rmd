@@ -1,0 +1,46 @@
+---
+title: "useCase"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Get all avaiable data of Endometrial
+
+```{r download}
+library(CPTACBiolinks)
+CancerType = "Endometrial"
+proteomics = getDataType(CancerType,"Proteome")
+RNAseq = getDataType(CancerType,"RNAseq")
+mutation = getDataType(CancerType,"mutation")
+```
+
+## Plot Mutation
+```{r plot}
+plotMutations(mutation$`Mutation (Gene level, Tumor)`)
+plotMutations(mutation$`Mutation (Site level, Tumor)`)
+```
+
+## Subset RNAseq and Proteomics with shared mutation
+```{r subset}
+RNAseq_tum = RNAseq$`RNAseq (HiSeq, Gene level, Tumor)`
+proteomics_tum = proteomics$`Proteome (Gene level, TMT Unshared Log Ratio, Tumor)`
+mutation_tum = mutation$`Mutation (Gene level, Tumor)`
+
+top_gene = topMutatedGenes(mutation_tum, 1)
+
+RNAseq_sub = subsetSharedMutation(RNAseq_tum,mutation_tum,top_gene$geneID)
+proteomics_sub = subsetSharedMutation(proteomics_tum,mutation_tum,top_gene$geneID)
+
+```
+
+## Boxplot RNAseq and Proteomics
+```{r boxplot}
+samples_notPTEN <- colnames(proteomics_tum)[!colnames(proteomics_tum) %in% colnames(proteomics_sub)]
+
+boxplot(list(proteomics_with_PTEN = t(proteomics_sub["EGFR",]), proteomics_without_PTEN = t(proteomics_tum["EGFR",samples_notPTEN])))
+
+boxplot(list(RNAseq_with_PTEN = t(RNAseq_sub["EGFR",]), RNAseq_without_PTEN = t(RNAseq_tum["EGFR",samples_notPTEN])))
+```
