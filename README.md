@@ -46,3 +46,7 @@ otherwise you can use ```getData```, if you want to download specifics data or a
 all_endometrial = getData(CancerType,"All")
 names(all_endometrial)
 ```
+
+## Use Cases
+
+[Example difference RNAseq and Proteomics with and without Mutation](https://github.com/miccec/CPTACBiolinks/blob/main/vignettes/useCase.md)
