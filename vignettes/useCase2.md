@@ -22,7 +22,9 @@ RNAseq = getDataType(CancerType,"RNAseq")
 proteomics_tum = proteomics$`Proteome (Gene level, TMT Unshared Log Ratio, Tumor)`
 rnaseq_tum = RNAseq$`RNAseq (HiSeq, Gene level, Tumor)`
 
-p1 <- plotCorrelation(proteomics_tum,rnaseq_tum)
+correlation_df <- correlationOmics(proteomics_tum,rnaseq_tum)
+
+p1 <- plotCorrelation(correlation_df)
 p1 
 ```
 
@@ -61,9 +63,9 @@ proteomics <- proteomics[keep,]
 rownames(proteomics) <- proteomics$symbol
 proteomics <- proteomics[,-c(1:3)]
 
-colnames(proteomics) <- gsub("-",".",colnames(proteomics))
+correlation_df <- correlationOmics(proteomics,rnaseq)
 
-p1 <- plotCorrelation(proteomics,rnaseq)
+p1 <- plotCorrelation(correlation_df)
 p1 
 ```
 

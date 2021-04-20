@@ -4,12 +4,10 @@
 \alias{plotCorrelation}
 \title{Plot correlation}
 \usage{
-plotCorrelation(dataOmics1, dataOmics2)
+plotCorrelation(correlation_df)
 }
 \arguments{
-\item{dataOmics1}{}
-
-\item{dataOmics2}{}
+\item{correlation_df}{}
 }
 \value{
 

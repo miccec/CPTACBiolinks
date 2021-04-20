@@ -118,9 +118,9 @@ convertEnsambleToSymbol <- function(gene_list){
 
 }
 
-#' Plot correlation
+#' Correlation beetween omics data
 #'
-#' Plot correlation of genes between different omics data
+#' Get correlation of genes between different omics data
 #'
 #' @param dataOmics1 
 #' @param dataOmics2 
@@ -129,8 +129,8 @@ convertEnsambleToSymbol <- function(gene_list){
 #' @export
 #'
 #' @examples
-plotCorrelation <- function(dataOmics1, dataOmics2){
-  
+correlationOmics <- function(dataOmics1, dataOmics2){
+
   inter_genes <- intersect(rownames(dataOmics1),rownames(dataOmics2))
   inter_samples <- intersect(colnames(dataOmics1),colnames(dataOmics2))
   
@@ -145,12 +145,27 @@ plotCorrelation <- function(dataOmics1, dataOmics2){
     }
     
   }
-
-  p_val = as.numeric(unlist(df["pval"]))
-  p_val[p_val==0] <- (10^-1)*min(p_val[p_val!=0])
-  rho = as.numeric(unlist(df["rho"]))
   
-  df2 <- data.frame(pval = -log10(p_val), rho = rho, geneID = rownames(df))
+  return(df)
+}
+
+#' Plot correlation
+#'
+#' Plot correlation of genes between different omics data
+#'
+#' @param correlation_df 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plotCorrelation <- function(correlation_df){
+  
+  p_val = as.numeric(unlist(correlation_df["pval"]))
+  p_val[p_val==0] <- (10^-1)*min(p_val[p_val!=0])
+  rho = as.numeric(unlist(correlation_df["rho"]))
+  
+  df2 <- data.frame(pval = -log10(p_val), rho = rho, geneID = rownames(correlation_df))
   
   return(ggplot(df2, aes(x=rho, y=pval, label = geneID)) + 
     geom_point() + 
