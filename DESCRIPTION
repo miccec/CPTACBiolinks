@@ -18,6 +18,7 @@ Imports:
     maftools,
     dplyr,
     ggplot2,
-    ggrepel
+    ggrepel,
+    data.table (>= 1.13.2)
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
